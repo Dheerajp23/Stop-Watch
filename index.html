@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="./src/styles.css">
+  <title>Refractorn</title>
+
+</head>
+
+<body>
+  <div class="container ">
+    <h1>Stop-Watch</h1>
+    <div class="clock flex ">
+      <h2 id="displaytime" class=" digits">00:00:00</h2>
+      <div class="startwrapper">
+        <button class="button start" onclick='start()'>Start</button>
+      </div>
+      <div class="buttons flex justify align">
+
+        <button class="button stop" onclick="stop()">Stop</button>
+        <button class="button reset" onclick="reset()">Reset</button>
+        <button class="button reset" onclick="lap()">Lap</button>
+      </div>
+    </div>
+    <div id="laps">
+      <h3>Laps</h3>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+
+
+
+  <script>
+
+    let [second, min, hour] = [0, 0, 0]
+    let display = document.querySelector("#displaytime")
+    let timer = null
+
+
+    function clock() {
+      second++
+      if (second == 60) {
+        second = 0;
+        min++
+        if (min == 60) {
+          min = 0;
+          hour++
+
+        }
+      }
+      let h = hour < 10 ? "0" + hour : hour;
+      let m = min < 10 ? "0" + min : min;
+      let s = second < 10 ? "0" + second : second;
+
+
+      display.innerHTML = `${h}:${m}:${s}`
+    }
+
+    function start() {
+      if (timer !== null) {
+        clearInterval(timer)
+      }
+
+      timer = setInterval(clock, 1000)
+    }
+    function reset() {
+      clearInterval(timer);
+
+      [second, min, hour] = [0, 0, 0]
+      display.innerHTML = "00:00:00";
+      document.querySelector("#laps").innerHTML = ""
+    }
+
+    function stop() {
+      clearInterval(timer);
+
+    }
+    function lap() {
+      document.querySelector("#laps").innerHTML += `<p> ${hour} : ${min} : ${second} </p>`
+    }
+  </script>
+</body>
+
+</html>
