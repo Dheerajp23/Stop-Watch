@@ -79,10 +79,16 @@
     }
     function reset() {
       clearInterval(timer);
+      timer = null;
+
 
       [second, min, hour] = [0, 0, 0]
       display.innerHTML = "00:00:00";
-      document.querySelector("#laps").innerHTML = ""
+      const laps = document.querySelectorAll("#laps p");
+    
+       laps.forEach(lap => {
+      lap.remove()
+      }) 
     }
 
     function stop() {
@@ -90,8 +96,14 @@
 
     }
     function lap() {
-      document.querySelector("#laps").innerHTML += `<p> ${hour} : ${min} : ${second} </p>`
-    }
+     if(timer !== null){
+      
+     if(document.querySelector("#laps").children.length < 10){
+      let lap = document.createElement("p")
+      lap.innerHTML = display.innerHTML
+      document.querySelector("#laps").appendChild(lap)
+     }
+    }}
   </script>
 </body>
 
